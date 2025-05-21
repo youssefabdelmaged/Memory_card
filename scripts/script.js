@@ -13,7 +13,7 @@ let cardOne, cardTwo;
 let disableDeck = false;
 let timer;
 let time = 0;
-let attempts = 0;
+let attempts = 0; //  New: Track number of attempts
 
 // DOM elements
 const cards = document.querySelectorAll(".card");
@@ -25,8 +25,8 @@ const difficultySelect = document.getElementById("difficulty-select");
 const mainMenu = document.querySelector(".mc-game-menu");
 const mainGame = document.querySelector(".wrapper");
 const scoreList = document.getElementById("score-list");
-const attemptsElement = document.getElementById("attempts");
-const restartButton = document.getElementById("restart-button");
+const attemptsElement = document.getElementById("attempts"); //  New
+const restartButton = document.getElementById("restart-button"); //  New
 
 // Start timer
 function startTimer(timeLimit) {
@@ -50,6 +50,7 @@ function stopTimer() {
   clearInterval(timer);
 }
 
+// Flip card
 function flipCard({ target: clickedCard }) {
   if (cardOne !== clickedCard && !disableDeck) {
     flippedCount++;
@@ -82,18 +83,18 @@ function matchCards(img1, img2) {
     }
     matched++;
 
-    // Add sparkle effect to both matched cards
-    [cardOne, cardTwo].forEach((card) => {
-      const sparkle = document.createElement("div");
-      sparkle.classList.add("sparkle");
-      card.appendChild(sparkle);
-
-      // Remove sparkle after animation ends
-      setTimeout(() => {
-        sparkle.remove();
-      }, 1000);
-    });
-
+ // 🎇 Add sparkle effect to both matched cards
+ [cardOne, cardTwo].forEach(card => {
+  const sparkle = document.createElement("div");
+  sparkle.classList.add("sparkle");
+  card.appendChild(sparkle);
+  
+  // Remove sparkle after animation ends
+  setTimeout(() => {
+    sparkle.remove();
+  }, 1000);
+});
+    
     if (matched === difficulties[currentDifficulty].pairs) {
       stopTimer();
       endGame(true);
@@ -129,8 +130,8 @@ function shuffleCard(difficulty) {
   currentDifficulty = difficulty;
   matched = 0;
   flippedCount = 0;
-  attempts = 0; // ✅ Reset attempts
-  attemptsElement.textContent = `Attempts: 0`; // ✅ Update UI
+  attempts = 0; //  Reset attempts
+  attemptsElement.textContent = `Attempts: 0`; // Update UI
   disableDeck = false;
   cardOne = cardTwo = "";
   messageElement.style.display = "none";
@@ -206,6 +207,7 @@ function shuffleCard(difficulty) {
   startTimer(difficulties[difficulty].timeLimit);
 }
 
+// End game
 function endGame(won) {
   stopTimer();
   disableDeck = true;
@@ -245,8 +247,38 @@ function endGame(won) {
   }, 3000);
 }
 
+// Generate unique numeric ID
+function generateNumericId(existingIds = []) {
+  if (existingIds.length === 0) return 1;
+  const maxId = Math.max(...existingIds);
+  return maxId + 1;
+}
+
+// Save score
+function saveScore(name, score, won = false) {
+  const scores = JSON.parse(localStorage.getItem("scores")) || [];
+  const existingIds = scores.map((item) => item.id).filter((id) => !isNaN(id));
+  const id = generateNumericId(existingIds);
+  scores.push({ id, name, score, won });
+  scores.sort((a, b) => b.score - a.score);
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+function updateLeaderboard() {
+  const scores = JSON.parse(localStorage.getItem("scores")) || [];
+  scoreList.innerHTML = scores
+    .slice()
+    .reverse()
+    .map(
+      (entry) =>
+        `<div>${entry.name} - ${entry.won ? "WINNER" : entry.score}</div>`
+    )
+    .join("");
+}
+
 mainGame.style.display = "none";
 
+// Start game
 startButton.addEventListener("click", () => {
   playerName = nameInput.value.trim();
   const selectedDifficulty = difficultySelect.value;
@@ -267,6 +299,9 @@ startButton.addEventListener("click", () => {
   shuffleCard(selectedDifficulty);
 });
 
+// Restart button listener
 restartButton.addEventListener("click", () => {
   shuffleCard(currentDifficulty);
 });
+
+updateLeaderboard();
