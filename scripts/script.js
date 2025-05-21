@@ -72,3 +72,53 @@ function flipCard({ target: clickedCard }) {
     matchCards(cardOneImg, cardTwoImg);
   }
 }
+
+function matchCards(img1, img2) {
+  if (img1 === img2) {
+    const correctSound = document.getElementById("correct-sound");
+    if (correctSound) {
+      correctSound.currentTime = 0;
+      correctSound.play();
+    }
+    matched++;
+
+ // Add sparkle effect to both matched cards
+ [cardOne, cardTwo].forEach(card => {
+  const sparkle = document.createElement("div");
+  sparkle.classList.add("sparkle");
+  card.appendChild(sparkle);
+  
+  // Remove sparkle after animation ends
+  setTimeout(() => {
+    sparkle.remove();
+  }, 1000);
+});
+    
+    if (matched === difficulties[currentDifficulty].pairs) {
+      stopTimer();
+      endGame(true);
+    }
+    cardOne.removeEventListener("click", flipCard);
+    cardTwo.removeEventListener("click", flipCard);
+    cardOne = cardTwo = "";
+    return (disableDeck = false);
+  }
+
+  const wrongSound = document.getElementById("wrong-sound");
+  if (wrongSound) {
+    wrongSound.currentTime = 0;
+    wrongSound.play();
+  }
+
+  setTimeout(() => {
+    cardOne.classList.add("shake");
+    cardTwo.classList.add("shake");
+  }, 200);
+
+  setTimeout(() => {
+    cardOne.classList.remove("shake", "flip");
+    cardTwo.classList.remove("shake", "flip");
+    cardOne = cardTwo = "";
+    disableDeck = false;
+  }, 1200);
+}
