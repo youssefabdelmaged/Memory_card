@@ -15,7 +15,208 @@
     <link rel="stylesheet" href="/styles/mainMenu.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-<body>
-    
-</body>
+  <body>
+    <div class="mc-game-menu">
+      <div
+        class="menu-container"
+        role="main"
+        aria-label="Memory Card Game Main Menu and Leaderboard"
+      >
+        <section class="menu-card card-custom" aria-label="Game menu">
+          <h1>Memory Card 🎮</h1>
+          <div class="custom-select-wrapper">
+            <input
+              type="text"
+              id="name-input"
+              class="player-name"
+              placeholder="Enter your name"
+              aria-label="Enter your name"
+            />
+            <select id="difficulty-select" aria-label="Select game difficulty">
+              <option value="easy" selected>Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <button id="start-button" aria-label="Start game">Start</button>
+        </section>
+        <section
+          class="card-custom leaderboard-card"
+          aria-label="Score leaderboard"
+        >
+          <div class="leaderboard-header">
+            <span class="emoji" role="img" aria-label="Trophy">🏆</span> Score
+            Leaderboard
+          </div>
+          <div class="scores" id="score-list" tabindex="0"></div>
+        </section>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="game-header">
+        <div id="attempts">💡 Attempts: 0</div>
+        <button id="restart-button">🔄 Restart</button>
+      </div>
+      <div
+        id="timer"
+        style="font-size: 24px; font-weight: bold; margin-bottom: 10px"
+      >
+        Time: 0s
+      </div>
+      <div
+        id="message"
+        style="
+          font-size: 24px;
+          font-weight: bold;
+          color: red;
+          margin-bottom: 10px;
+          display: none;
+        "
+      ></div>
+      <ul class="cards">
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-1.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-6.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-3.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-2.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-1.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-5.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-2.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-6.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-3.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-5.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+        <li class="card">
+          <div class="view front-view">
+            <img src="images/que_icon.svg" alt="icon" />
+          </div>
+          <div class="view back-view">
+            <img src="images/img-4.png" alt="card-img" />
+          </div>
+        </li>
+      </ul>
+    </div>
+    <audio
+      id="wrong-sound"
+      src="sounds/WrongVoice_mixdown.mp3"
+      preload="auto"
+    ></audio>
+    <audio
+      id="correct-sound"
+      src="sounds/CorrectVoice_mixdown.mp3"
+      preload="auto"
+    ></audio>
+
+    <script src="/scripts/pointer.js"></script>
+    <script type="text/javascript" src="js/jquery.1.11.1.js"></script>
+    <script src="/scripts/script.js"></script>
+  </body>
 </html>
