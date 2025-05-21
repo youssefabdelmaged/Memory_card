@@ -49,3 +49,90 @@ function startTimer(timeLimit) {
 function stopTimer() {
   clearInterval(timer);
 }
+
+
+
+
+
+// Shuffle cards
+function shuffleCard(difficulty) {
+  if (!difficulty) difficulty = currentDifficulty;
+  currentDifficulty = difficulty;
+  matched = 0;
+  flippedCount = 0;
+  attempts = 0; // ✅ Reset attempts
+  attemptsElement.textContent = `Attempts: 0`; // ✅ Update UI
+  disableDeck = false;
+  cardOne = cardTwo = "";
+  messageElement.style.display = "none";
+
+  const pairs = difficulties[difficulty].pairs;
+  const totalCards = pairs * 2;
+
+  let arr = [];
+  for (let i = 1; i <= pairs; i++) {
+    arr.push(i, i);
+  }
+
+  function easyShuffle(array) {
+    for (let i = 0; i < array.length / 2; i++) {
+      const j = i + Math.floor(Math.random() * (array.length / 2));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function mediumShuffle(array) {
+    const size = 4;
+    let grid = new Array(size).fill(null).map(() => new Array(size).fill(null));
+    let pairNum = 1;
+    for (let i = 0; i < size / 2; i++) {
+      for (let j = 0; j < size; j++) {
+        if (pairNum > array.length / 2) break;
+        grid[i][j] = pairNum;
+        grid[size - 1 - i][size - 1 - j] = pairNum;
+        pairNum++;
+      }
+    }
+    let idx = 0;
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        array[idx++] = grid[r][c];
+      }
+    }
+  }
+
+  function preHardShuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function hardShuffle(array) {
+    preHardShuffle(array);
+    preHardShuffle(array);
+  }
+
+  if (difficulty === "easy") {
+    easyShuffle(arr);
+  } else if (difficulty === "medium") {
+    mediumShuffle(arr);
+  } else if (difficulty === "hard") {
+    hardShuffle(arr);
+  }
+
+  cards.forEach((card, i) => {
+    if (i < totalCards) {
+      card.style.display = "flex";
+      card.classList.remove("flip");
+      let imgTag = card.querySelector(".back-view img");
+      imgTag.src = `images/img-${arr[i]}.png`;
+      card.addEventListener("click", flipCard);
+    } else {
+      card.style.display = "none";
+      card.removeEventListener("click", flipCard);
+    }
+  });
+
+  startTimer(difficulties[difficulty].timeLimit);
+}
