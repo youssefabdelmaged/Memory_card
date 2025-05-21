@@ -205,3 +205,68 @@ function shuffleCard(difficulty) {
 
   startTimer(difficulties[difficulty].timeLimit);
 }
+
+function endGame(won) {
+  stopTimer();
+  disableDeck = true;
+  const score = matched;
+
+  messageElement.style.opacity = 0;
+  messageElement.style.maxHeight = "10px";
+  messageElement.style.maxWidth = "390px";
+  messageElement.style.overflow = "hidden";
+  messageElement.style.display = "flex";
+  messageElement.style.whiteSpace = "normal";
+  messageElement.style.transition = "opacity 1.5s ease, max-height 1.5s ease";
+
+  messageElement.textContent = won
+    ? `You win! Congratulations, ${playerName}`
+    : `You lose! Time's up, ${playerName}.`;
+
+  setTimeout(() => {
+    messageElement.style.opacity = 1;
+    messageElement.style.maxHeight = "300px";
+  }, 50);
+
+  saveScore(playerName, score, won);
+
+  nameInput.value = "";
+  difficultySelect.value = "easy";
+
+  setTimeout(() => {
+    messageElement.style.opacity = 0;
+    messageElement.style.maxHeight = "0px";
+    setTimeout(() => {
+      mainMenu.style.display = "flex";
+      mainGame.style.display = "none";
+      messageElement.style.display = "none";
+      updateLeaderboard();
+    }, 1500);
+  }, 3000);
+}
+
+mainGame.style.display = "none";
+
+startButton.addEventListener("click", () => {
+  playerName = nameInput.value.trim();
+  const selectedDifficulty = difficultySelect.value;
+
+  if (!playerName) {
+    alert("Please enter your name.");
+    return;
+  }
+
+  if (!selectedDifficulty) {
+    alert("Please select a difficulty.");
+    return;
+  }
+
+  mainMenu.style.display = "none";
+  mainGame.style.display = "block";
+
+  shuffleCard(selectedDifficulty);
+});
+
+restartButton.addEventListener("click", () => {
+  shuffleCard(currentDifficulty);
+});
