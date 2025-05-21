@@ -1,0 +1,278 @@
+/* Import Google Font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #6563ff;
+  overflow: hidden;
+}
+.wrapper {
+  padding: 25px;
+  border-radius: 10px;
+  background: #f8f8f85d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.cards,
+.card,
+.view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cards {
+  height: 400px;
+  width: 400px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.cards .card {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  height: calc(100% / 4 - 10px);
+  width: calc(100% / 4 - 10px);
+}
+.card.shake {
+  animation: shake 0.35s ease-in-out;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-13px);
+  }
+  40% {
+    transform: translateX(13px);
+  }
+  60% {
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(8px);
+  }
+}
+.card .view {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 7px;
+  background: #ffffffb0;
+  pointer-events: none;
+  backface-visibility: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s linear;
+}
+.card .front-view img {
+  width: 19px;
+}
+.card .back-view img {
+  max-width: 45px;
+}
+.card .back-view {
+  transform: rotateY(-180deg);
+}
+.card.flip .back-view {
+  transform: rotateY(0);
+}
+.card.flip .front-view {
+  transform: rotateY(180deg);
+}
+
+@media screen and (max-width: 700px) {
+  .cards {
+    height: 350px;
+    width: 350px;
+  }
+  .card .front-view img {
+    width: 17px;
+  }
+  .card .back-view img {
+    max-width: 40px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .cards {
+    height: 300px;
+    width: 300px;
+    margin: 0 auto;
+  }
+  .card .front-view img {
+    width: 15px;
+  }
+  .card .back-view img {
+    max-width: 35px;
+  }
+}
+
+.difficulty-buttons {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.difficulty-btn {
+  background-color: #6563ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  margin: 0 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(101, 99, 255, 0.4);
+}
+
+.difficulty-btn:hover {
+  background-color: #4a49d1;
+  box-shadow: 0 6px 12px rgba(74, 73, 209, 0.6);
+}
+
+.difficulty-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(101, 99, 255, 0.7);
+}
+
+.selected {
+  background-color: #4a49d1;
+  box-shadow: 0 6px 12px rgba(74, 73, 209, 0.6);
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) rotate(360deg);
+  }
+}
+
+.sparkle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  background: url("/images/clearsparkle.gif") no-repeat center center / contain;
+  animation: sparkle 1s ease-out forwards;
+  z-index: 10;
+}
+
+.game-header {
+  font-size: 2.5em;
+  font-weight: 600;
+  color: #f0f0ff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+#restart-button {
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#restart-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+#attempts {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: inline-block;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #e0e0ff4b;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6563ff;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a49d1;
+}
+
+::-webkit-scrollbar-corner {
+  background: #e0e0ff;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6563ff #e0e0ff00;
+}
+
+/* Remove blue tap highlight on mobile */
+button,
+.card,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Remove focus outline on buttons and inputs */
+button:focus,
+input:focus,
+select:focus,
+.card:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Make wrapper and body more responsive on small screens */
+@media screen and (max-width: 530px) {
+  body {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .wrapper {
+    width: 100%;
+    padding: 15px;
+    box-shadow: none;
+  }
+  .cards {
+    height: 280px;
+    width: 280px;
+  }
+}
